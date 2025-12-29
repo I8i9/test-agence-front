@@ -1,0 +1,26 @@
+*::-webkit-scrollbar {
+  height: 16px;
+  width: 10px;
+}
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #FFFFFF;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #e5e5e5; /* Base color */
+  border-radius: 8px;
+  transition: background 0.3s ease-in-out;
+  border:2px white solid;
+
+}
+
+/* Hover effect */
+*::-webkit-scrollbar-thumb:hover {
+  background: #d4d4d4; /* Slightly darker */
+}
+
+/* Active (when clicked/dragging) */
+*::-webkit-scrollbar-thumb:active {
+  background: #bfbfbf; /* A bit darker again */
+}

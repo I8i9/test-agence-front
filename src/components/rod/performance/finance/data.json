@@ -1,0 +1,72 @@
+[
+  {
+    "date": "2024-04-01",
+    "revenu": 4200,
+    "depense": 1800,
+    "brut": 2400,
+    "taux_brut": 57
+  },
+  {
+    "date": "2024-04-02",
+    "revenu": 3800,
+    "depense": 1600,
+    "brut": 2200,
+    "taux_brut": 58
+  },
+  {
+    "date": "2024-04-03",
+    "revenu": 3100,
+    "depense": 1500,
+    "brut": 1600,
+    "taux_brut": 52
+  },
+  {
+    "date": "2024-04-04",
+    "revenu": 5200,
+    "depense": 2100,
+    "brut": 3100,
+    "taux_brut": 60
+  },
+  {
+    "date": "2024-04-05",
+    "revenu": 6500,
+    "depense": 2600,
+    "brut": 3900,
+    "taux_brut": 60
+  },
+  {
+    "date": "2024-04-06",
+    "revenu": 6000,
+    "depense": 2400,
+    "brut": 3600,
+    "taux_brut": 60
+  },
+  {
+    "date": "2024-04-07",
+    "revenu": 4500,
+    "depense": 2000,
+    "brut": 2500,
+    "taux_brut": 55
+  },
+  {
+    "date": "2024-04-08",
+    "revenu": 7000,
+    "depense": 2800,
+    "brut": 4200,
+    "taux_brut": 60
+  },
+  {
+    "date": "2024-04-09",
+    "revenu": 3000,
+    "depense": 1400,
+    "brut": 1600,
+    "taux_brut": 53
+  },
+  {
+    "date": "2024-04-10",
+    "revenu": 5600,
+    "depense": 2300,
+    "brut": 3300,
+    "taux_brut": 59
+  }
+]
