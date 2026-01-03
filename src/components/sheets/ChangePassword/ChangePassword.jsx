@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/sheet"
 import { useEffect, useState } from 'react'
 import SendMailChangePassword from './SendMail.jsx'
-import FormOTPChangePassword from './FormOtp.jsx'
+import FormOTPChangePassword from './formOtp.jsx'
 import FormChangePassword from './formChangePassword.jsx'
 import Finish from './finishChangePassword.jsx'
 import { RectangleEllipsis } from 'lucide-react'
