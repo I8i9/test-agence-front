@@ -19,7 +19,7 @@ import { useLogout } from '../../../api/queries/auth/useLogout.js'
 import { useState } from 'react'
 
 import AgencySubscriptionSheet from '../../sheets/AgencySubscription/agencySubscription.jsx'
-import AgencyAccountsSheet from '../../sheets/AgencyAccounts/agencyAccounts.JSX'
+import AgencyAccountsSheet from '../../sheets/AgencyAccounts/agencyAccounts.jsx'
 import ChangePasswordSheet from '../../sheets/ChangePassword/ChangePassword.jsx'
 import { DrawerSettings } from '../../sheets/settings/settingDrawer.jsx'
 import TwoFactorSheet from '../../sheets/2fa/2fa.jsx'
