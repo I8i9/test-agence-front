@@ -6,10 +6,11 @@ const getDemandeCountApi = async () => {
     return response.data.data;
 };
 
-export const useFetchDemandeCount = () => {
+export const useFetchDemandeCount = (options={}) => {
     return useQuery({
         queryKey: ['countDemand'],
         staleTime: 30 * 1000,
-        queryFn: () => getDemandeCountApi()
+        queryFn: () => getDemandeCountApi(), 
+        enabled: options.enabled
     });
 };

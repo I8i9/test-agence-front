@@ -3,8 +3,9 @@ import { useFetchDepenseCount } from '../../../api/queries/depense/useFetchCount
 import ToolTipCustom from '../../customUi/tooltip'
 import { useStore } from '../../../store/store';
 const DepenseCount = ({ isSelected }) => {
-    const { data , isLoading } = useFetchDepenseCount();
     const user = useStore(state => state.user);
+    const { data , isLoading } = useFetchDepenseCount({enabled: !user?.agency?.isExpired});
+    
     console.log(user?.agency?.isExpired )
     
     if (user?.agency?.isExpired) {

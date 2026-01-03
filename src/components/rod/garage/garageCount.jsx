@@ -5,8 +5,8 @@ import ToolTipCustom from '../../customUi/tooltip.jsx';
 import { useStore } from '../../../store/store.js';
 
 const GarageCount = ({isSelected}) => {
-    const { data , isLoading } = useFetchGarageCount();
     const user = useStore(state => state.user);
+    const { data , isLoading } = useFetchGarageCount({enabled: !user?.agency?.isExpired});
     
     if (user?.agency?.isExpired) {
         return null;

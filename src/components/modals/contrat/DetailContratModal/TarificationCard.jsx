@@ -5,7 +5,7 @@ import { Separator } from '@/components/ui/separator';
 import ToolTipCustom from '../../../customUi/tooltip';
 
 
-const TarificationCard = ({ data  ,options}) => {
+const TarificationCard = ({badge , penalite, data  ,options , numberOptions }) => {
   console.log("options",options)
   return (
     <Card className="shadow-none h-full">
@@ -51,11 +51,15 @@ const TarificationCard = ({ data  ,options}) => {
               {Object.entries(options).map(([key, label]) => {
                 const value = options?.[key] ??  null
                 console.log(value)
+                const showNumber = numberOptions?.[key]
                 if (value === null) return null
                 return (
                   <div key={key}>
                     <p className=" justify-between font-normal h-6 flex items-center">
-                      <span className=" text-gray-600 font-normal">{key}</span>
+                      <span className=" text-gray-600 font-normal">
+                        {showNumber ? `${showNumber} ` : ''}{key}
+                        
+                      </span>
                       {value === 0 ? `Gratuit` : `${value} DT`}
                     </p>
                     <Separator />
@@ -82,7 +86,17 @@ const TarificationCard = ({ data  ,options}) => {
         }
         
         <DetailItem label="Totale Facture" icon={Receipt}>
-          {data?.totale_facture!==null ? <span className="font-semibold">{data?.totale_facture} DT</span> : '_'}
+          {data?.totale_facture!==null ? 
+          badge === 'Annulé' ?
+          <ToolTipCustom
+            trigger={
+          <span className="font-semibold flex"> <span className=' text-gray-500 line-through decoration-1.5  mr-2 font-normal'>{data?.totale_facture} DT</span> {penalite || 0} DT <Info className="w-3 h-3 ml-1 place-self-start text-gray-600" /></span>}
+          message={
+                'Suite à l’annulation du contrat, la facture totale devient la pénalité appliquée. ' 
+            }
+          />
+          : <span className="font-semibold">{data?.totale_facture} DT</span> 
+          : '_'}
         </DetailItem>
       </CardContent>
 

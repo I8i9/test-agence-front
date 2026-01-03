@@ -109,6 +109,7 @@ const CreateCspModal = ({open , setOpen}) => {
       } : null  ,
         
       selectedOptions : ContratSpData.selectedOptions || [],
+      numberOptions : ContratSpData.numberOptions || {},
       // Guest info instead of account
       ...(ContratSpData.existing_guest_id 
         ? { existing_guest_id: ContratSpData.existing_guest_id }
@@ -214,7 +215,7 @@ const CreateCspModal = ({open , setOpen}) => {
           errorMessage={error?.response?.data?.message} // Pass the entire error object
         /> : 
 
-        <DialogContent className={`flex  ${(activeTab === 0 || (loading && fetchedOnce.current === false)) ? 'h-auto max-w-[600px] min-h-[494px]'  : activeTab === 3 ? 'h-[700px] max-w-[996px]' : 'h-[710px] max-w-[996px]'} scale-85 desktop:scale-90 desktop-lg:scale-110 flex-col`}>
+        <DialogContent className={`flex  ${(activeTab === 0 || (loading && fetchedOnce.current === false)) ? 'h-auto max-w-[600px] min-h-[494px]'  : activeTab === 3 ? 'h-[710px] max-w-[996px]' : 'h-[710px] max-w-[996px]'} scale-85 desktop:scale-90 desktop-lg:scale-110 flex-col`}>
           <DialogHeader className="flex-shrink-0">
             <DialogTitle className="w-full leading-tight"> 
               {tabs[activeTab].label}

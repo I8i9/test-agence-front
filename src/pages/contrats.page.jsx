@@ -163,6 +163,9 @@ const ContratsPage = () => {
       case badge === 'Planifiée' || badge.startsWith('Commence'):
         styleClass = 'bg-blue-100 text-blue-600 text-sm';
         break;
+      case badge === 'Annulé':
+        styleClass = 'bg-orange-100 text-orange-600 text-sm';
+        break;
       // Terminée
       case badge === 'Expirée':
         styleClass = 'bg-red-100 text-red-600 text-sm';

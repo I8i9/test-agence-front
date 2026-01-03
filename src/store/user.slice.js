@@ -7,6 +7,7 @@ export const createUserSlice = (set) => ({
     token: null,
     config : null,
     threshold : null,
+    twoFAEnabled: null,
     agency: {
       name_agency: null,
       subscription: null,
@@ -57,6 +58,7 @@ export const createUserSlice = (set) => ({
         token: null,
         config : null,
         threshold : null,
+        twoFAEnabled: null,
         agency: {
           name_agency: null,
           subscription: null,

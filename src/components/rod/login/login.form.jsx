@@ -31,7 +31,7 @@ const FormLogin = (props) => {
     });
 
     // Handle form submission 
-      const { mutate: login,isPending} = useLogin();
+      const { mutate: login,isPending} = useLogin((step, email) => { props.setEmail(email); props.setCurrentForm(step); });
       const handleLogin = ( {email, password}) => {
           login( {email, password} );
 
@@ -40,7 +40,7 @@ const FormLogin = (props) => {
     // Show password toggle state
     const [showPassword, setShowPassword] = useState(false);
     return (
-        <div className='w-[65%] max-w-[576px] laptop:space-y-6 desktop:space-y-8 desktop-lg:space-y-16 desktop-xl:space-y-16 space-y-6 flex flex-col items-center justify-center'>
+        <div className='w-[65%] max-w-[576px] laptop:space-y-6 desktop:space-y-8 desktop-lg:space-y-8  space-y-6 flex flex-col items-center justify-center'>
             <div className='flex flex-col gap-2 items-center'>
                 <h1 className="text-3xl font-semibold">Connexion à votre compte</h1>
                 <h2 className="text-gray-500">Accédez à votre tableau de bord</h2>

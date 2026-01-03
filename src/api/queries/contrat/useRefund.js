@@ -13,7 +13,7 @@ export function useRefund() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: usePayContratApi,
-    onSuccess: (data) => {
+    onSuccess: (data, vars) => {
       toast.success('Remboursement enregistré avec succès');
       const date = data.date_paiement.split('-');
       const dateCr = data.date_creation.split('-');
@@ -21,6 +21,11 @@ export function useRefund() {
       queryClient.invalidateQueries(['archiveFactures' , date[0], date[1]]);
       queryClient.invalidateQueries(['archiveContrats' , dateCr[0], dateCr[1]]);
       queryClient.invalidateQueries(['archiveKpis' , date[0], date[1]]);
+      queryClient.invalidateQueries(['archivePaiements' , date[0], date[1]]);
+
+      if (vars.id_contrat_paiement) {
+        queryClient.invalidateQueries(['PaimentsContrat', vars.id_contrat_paiement]);
+      }
     },
     onError: () => {
       toast.error('Erreur lors de l\'enregistrement du paiement');

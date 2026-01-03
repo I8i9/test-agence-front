@@ -21,53 +21,6 @@ import {
 import AgencySubscriptionSkeleton from './agencySubscription.skeleton'
 import { FormatDateEEEEddMMyyyy , FormatDateddMMyyyy, formatDateDDMMYYYY } from "../../../utils/dateConverter"
 
-const test = [
-    {
-      reference_facture: "INV-2025-001",
-      date_facture: "2025-01-05",
-      date_echeance: "2025-01-15",
-      number_of_cars: 3,
-      price_per_car: 120,
-      total_ht: 360,
-      total_ttc: 414,
-    },
-    {
-      reference_facture: "INV-2025-002",
-      date_facture: "2025-01-10",
-      date_echeance: "2025-01-20",
-      number_of_cars: 5,
-      price_per_car: 110,
-      total_ht: 550,
-      total_ttc: 632.5,
-    },
-    {
-      reference_facture: "INV-2025-003",
-      date_facture: "2025-01-14",
-      date_echeance: "2025-01-24",
-      number_of_cars: 2,
-      price_per_car: 150,
-      total_ht: 300,
-      total_ttc: 345,
-    },
-    {
-      reference_facture: "INV-2025-004",
-      date_facture: "2025-01-18",
-      date_echeance: "2025-01-28",
-      number_of_cars: 4,
-      price_per_car: 130,
-      total_ht: 520,
-      total_ttc: 598,
-    },
-    {
-      reference_facture: "INV-2025-005",
-      date_facture: "2025-01-22",
-      date_echeance: "2025-02-01",
-      number_of_cars: 6,
-      price_per_car: 105,
-      total_ht: 630,
-      total_ttc: 724.5,
-    },
-  ]
 
 const period = {
   '1 mois' : 'bg-orange-100 text-orange-500',
@@ -250,20 +203,20 @@ const AgencySubscriptionSheet = ( props ) => {
 
           {/* Active Modules */}
         {
-          !subscription?.unpaid_invoice && !subscription?.unpaid_invoice?.length > 0 ?
+          subscription?.unpaid_invoice && subscription?.unpaid_invoice.length > 0 ?
         
         <Card className="w-full max-full pb-8 px-4 pt-4  shadow-none ">
           <CardHeader className="w-full px-0">
             <CardTitle className='flex items-center gap-2'>
               <FileText  size={24} />
-              <h2 className='text-xl font-medium leading-tight'>{subscription?.unpaid_invoice?.length || test?.length} Factures Impayées</h2>
+              <h2 className='text-xl font-medium leading-tight'>{subscription?.unpaid_invoice?.length} Factures Impayées</h2>
             </CardTitle>
           </CardHeader>
         <CardContent className="px-2 space-y-6">
           <div className='space-y-4'> 
             {
               //subscription?.unpaid_invoice.map((invoice, index) => (
-              test?.map( ( invoice , index ) => (
+              subscription?.unpaid_invoice?.map( ( invoice , index ) => (
               <div className="relative p-4 border border-gray-200 rounded-lg"> 
                 <Badge className="absolute  top-4 right-4 bg-red-100 text-red-600 text-xs font-medium rounded-full flex items-center gap-0.5">
                     <X size={12} />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -7,7 +7,6 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import useFetchreservations from '../../../../api/queries/offre/useGetreservations.js'
 import ResevationListCard from './ResrvationListCard.jsx'
 import {
@@ -93,7 +92,7 @@ function OffrePlanModal({ OffreId, open, onClose,offerData}) {
   };
 
   const selectContract = (contract) => {
-    if (contract.sequence === selectedcontract) {
+    if (contract.id_contrat === selectedcontract) {
       setselectedcontract(null);
       return;
     }
@@ -101,10 +100,28 @@ function OffrePlanModal({ OffreId, open, onClose,offerData}) {
     if (d < debutOffre) setCurrentDate(debutOffre);
     else if (d > finOffre) setCurrentDate(finOffre);
     else setCurrentDate(d);
-    setselectedcontract(contract.sequence);
+    setselectedcontract(contract.id_contrat);
   };
 
   const days = getDaysInMonth(currentDate);
+
+  const scrolledRef = React.useRef(false);
+
+  useEffect(() => {
+      if (data && data.length > 0 && !isLoading && !isError && !scrolledRef.current) {
+      let firstContract = data.find(c => c.status === "En Cours");
+      // if no en cours contract, select the first one to start on the future
+      if (!firstContract) {
+        firstContract = data.find(c => c.status === "Planifiée");
+      }
+      if (firstContract) {
+        console.log("Setting date to contract debut:", firstContract.debut);
+        setCurrentDate(new Date(firstContract.debut));
+        scrolledRef.current = true;
+      }
+    }
+
+  }, [data]);
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -156,7 +173,7 @@ function OffrePlanModal({ OffreId, open, onClose,offerData}) {
               </div>  
               <div className="flex items-center gap-2">
                 <div className="w-6 h-2 bg-blue-500 rounded-full"></div>{" "}
-                Planifié
+                Planifiée
               </div>
                 <div className="flex items-center gap-2">
                 <div className="w-6 h-2 bg-red-500 rounded-full"></div>{" "}
@@ -204,9 +221,11 @@ function OffrePlanModal({ OffreId, open, onClose,offerData}) {
                         // Calculate bottom position based on contract index - keep consistent positioning
                         let bottomPosition = 0;
                         if (contractsForDay.length > 1) {
-                          // Multiple contracts: alternate positions consistently
-                          bottomPosition = contractIndex % 2 === 0 ? 0 : 30;
+                          // alternate padding should always put the ned above the start on new 
+                          bottomPosition = contractIndex % 2 !== 0 ? 0 : 22;
                         } 
+
+                        const isStacked = contractsForDay.length > 1 && contractIndex % 2 === 0 ;
 
                         return (
                           <div
@@ -214,12 +233,14 @@ function OffrePlanModal({ OffreId, open, onClose,offerData}) {
                             className="flex flex-col items-center h-full gap-1"
                           >
                             <div
-                              className={` flex items-center justify-center rounded-full absolute transition-all duration-300 ease-in  ${
-                                dayTime === startTime ?  "w-16 h-5 mb-1.5" : "w-14 h-2  mb-3" 
-                              }  ${
-                                selectedcontract === c.sequence
-                                  ? `${c.status === "En Cours" ? "bg-green-500 ring-2 ring-green-200 ring-offset-1" : "bg-blue-500 ring-2 ring-blue-200 ring-offset-1"}  scale-[1.10] z-50`
-                                  : `${c.status === "En Cours" ? "bg-green-500" : "bg-blue-500"} scale-[1.01] z-40`
+                              className={` flex items-center justify-center rounded-full absolute transition-all duration-300 ease-in  
+                              ${
+                                 dayTime === startTime ? "w-16 h-5 mb-1.5" : isStacked ? 'w-14 h-1.5  mb-2' : " w-14 h-2 mb-3"
+                              }
+                              ${
+                                selectedcontract === c.id_contrat
+                                  ? `${c.status === "En Cours" ? "bg-green-500 ring-2 ring-green-200 ring-offset-1" : c.status === "Planifiée" ? "bg-blue-500 ring-2 ring-blue-200 ring-offset-1" : "bg-red-500 ring-2 ring-red-200 ring-offset-1"}  scale-[1.10] z-50`
+                                  : `${c.status === "En Cours" ? "bg-green-500" : c.status === "Planifiée" ? "bg-blue-500" : "bg-red-500"} scale-[1.01] z-40`
                               }`}
                               style={{ bottom: `${bottomPosition}px` }}
                             >

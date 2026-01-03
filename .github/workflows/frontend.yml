@@ -1,0 +1,29 @@
+name: Build & Deploy Frontend
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: i8i9
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & Push Frontend Image
+        run: |
+          docker build -t ghcr.io/i8i9/agence-front:latest .
+          docker push ghcr.io/i8i9/agence-front:latest

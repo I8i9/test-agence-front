@@ -21,12 +21,12 @@ const Status = ({ vehicule }) => {
 
                     
                     <DetailItem icon={CheckCircle2} label="Prix / Paiement" className='w-fit'>
-                      {vehicule.prix_achat_garage} DT
+                      {vehicule.prix_achat_garage} DT /
                         {vehicule.type_achat_garage  === "COMPTANT" ?
-                          " en Comptant" :
+                          " Comptant" :
                           vehicule.type_achat_garage === "LEASING" ?
-                          " par Leasing" :
-                          " à crédit"
+                          " Leasing" :
+                          " Crédit"
                         }
                         
                     </DetailItem>

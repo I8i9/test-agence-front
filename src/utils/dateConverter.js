@@ -1,9 +1,41 @@
 import { DateTime } from "luxon";
 
-const TIMEZONE = "Africa/Tunis";
+export const TIMEZONE = "Africa/Tunis";
 
+export const getTunisiaNewDateFromYearMonthDay = (year, month, day) => {
+  return DateTime.fromObject({ year, month: month === 12 ? 1 : month + 1, day }, { zone: TIMEZONE }).toJSDate();
+}
+
+export const getTunisiaNewDate = (date) => {
+  return DateTime.fromJSDate(new Date(date)).setZone(TIMEZONE).toJSDate();
+}
+export const getTunisiaMidnightDate = (date) => {
+  // parse input as JS Date or ISO string
+  const dt = DateTime.fromJSDate(new Date(date)).setZone(TIMEZONE).startOf("day");
+  return dt.toJSDate(); // native JS Date at 00:00 Tunisia
+};
+
+// this function is for the planning of offers and reservations
+export const getMonthBoundariesJS = (year, month) => {
+  // First day of the current month
+  const firstDay = DateTime.fromObject({ year, month: month=== 12 ? 1 : month + 1, day: 1 }, { zone: TIMEZONE }).toJSDate();
+
+  // Last day of the current month
+  const lastDay = DateTime.fromObject({ year, month: month=== 12 ? 1 : month + 1, day: 1 }, { zone: TIMEZONE })
+    .endOf("month")
+    .toJSDate();
+
+  // Last day of previous month
+  const prevMonthLastDay = DateTime.fromObject(
+      { year, month: month === 0 ? 12 : month, day: 1 }, // first day of previous month
+      { zone: TIMEZONE }
+    )
+    .endOf("month").day;
+
+  return { firstDay, lastDay, prevMonthLastDay };
+};
 // This helper now forces the Tunis zone so dates never "revert" to UTC or local browser time
-const toLuxonDate = (date) => {
+export const toLuxonDate = (date) => {
   if (!date) return DateTime.now().setZone(TIMEZONE).setLocale("fr");
   
   // fromISO reads the +01:00, and setZone(TIMEZONE) locks it there
@@ -15,7 +47,7 @@ export const nowTun = () => DateTime.now().setZone(TIMEZONE).setLocale("fr");
 /**
  * Capitalizes the first letter of each word (Day and Month)
  */
-const capitalize = (str) => str.replace(/\b\w/g, (char) => char.toUpperCase());
+const capitalize = (str) =>  str.replace(/(^|[\s,.;:!?])(\p{L})/gu, (_, sep, char) => sep + char.toUpperCase());
 
 export function FormatDateEEEEddMMyyyy(date) {
   const dt = toLuxonDate(date);

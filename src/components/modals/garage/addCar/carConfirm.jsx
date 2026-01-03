@@ -1,4 +1,4 @@
-import { Camera, Check, ChevronLeft, ChevronRight, Info } from "lucide-react";
+import { ArrowDown, BadgeDollarSign, Banknote, Calculator, CalendarCheck, Camera, Check, ChevronLeft, ChevronRight, Info, Tag } from "lucide-react";
 import { formatDateDDMMYYYYJS } from "../../../../utils/dateConverterJS";
 import { finishEffects , carColors } from "../../../../utils/colors";
 import { Button } from "../../../ui/button";
@@ -200,7 +200,7 @@ const InformationCard = ({ vehicleData }) => {
             <>
             <div >
             <div className="flex items-start gap-1.5">
-              <CarFront className="w-4 h-4 text-gray-500" />
+              <CalendarCheck className="w-4 h-4 text-gray-500" />
               <div className="flex flex-col items-start gap-1.5">
                 <span className=" text-gray-500 leading-none">Durée D'usage</span> 
                 <p className="font-medium leading-none">{vehicleData.annees_ammortissement} an{vehicleData.annees_ammortissement > 1 ? "s" : ""}</p>
@@ -211,7 +211,7 @@ const InformationCard = ({ vehicleData }) => {
           {/* Date d'achat véhicule */}
           <div >
             <div className="flex items-start gap-1.5">
-              <CalendarDaysIcon className="w-4 h-4 text-gray-500" />
+              <ArrowDown className="w-4 h-4 text-gray-500" />
               <div className="flex flex-col items-start gap-1.5">
                 <span className=" text-gray-500 leading-none text-nowrap ">Ammortissement/an</span> 
                 <p className="font-medium leading-none">{(vehicleData.valeur_amortissement)} DT</p>
@@ -222,7 +222,7 @@ const InformationCard = ({ vehicleData }) => {
           {/* Kilométrage */}
           <div >
             <div className="flex items-start gap-1.5">
-              <Gauge className="w-4 h-4 text-gray-500" />
+              <Calculator className="w-4 h-4 text-gray-500" />
               <div className="flex flex-col items-start gap-1.5">
                 <span className=" text-gray-500 leading-none">Valeur Comptable</span> 
                 <p className="font-medium leading-none">{vehicleData.valeur_achat} DT</p>
@@ -235,7 +235,7 @@ const InformationCard = ({ vehicleData }) => {
           {/* Couleur */}
           <div >
             <div className="flex items-start gap-1.5">
-              <Palette className="w-4 h-4 text-gray-500" />
+              <Tag className="w-4 h-4 text-gray-500" />
               <div className="flex flex-col items-start gap-1.5">
                 <span className=" text-gray-500 leading-none">Prix D'achat</span> 
                 <p className="font-medium leading-none">{vehicleData.prix_achat} DT</p>
@@ -245,7 +245,7 @@ const InformationCard = ({ vehicleData }) => {
 
           <div className="col-span-full">
             <div className="flex items-start gap-1.5">
-              <Palette className="w-4 h-4 text-gray-500" />
+              <Banknote className="w-4 h-4 text-gray-500" />
               <div className="flex flex-col items-start gap-1.5">
                 <span className=" text-gray-500 leading-none">Paiement</span> 
                 <p className="font-medium leading-none">{vehicleData.type_achat === "COMPTANT"

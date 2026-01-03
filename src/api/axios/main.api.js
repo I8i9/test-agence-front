@@ -5,7 +5,7 @@ import {useStore} from "../../store/store.js"
 // Axios instance for making requests
 
 const mainapi = axios.create({
-  baseURL: import.meta.env.API_BASE_URL ||  'http://localhost:3000/', 
+  baseURL: import.meta.env.VITE_API_BASE_URL ||  'http://localhost:3000/', 
   withCredentials: true              
 });
 

@@ -6,10 +6,11 @@ const getDepenseCountApi = async () => {
     return response.data.data;
 };
 
-export const useFetchDepenseCount = () => {
+export const useFetchDepenseCount = (options={}) => {
     return useQuery({
         queryKey: ['countDepense'],
         staleTime: 30 * 1000,
+        enabled: options.enabled,
         queryFn: () => getDepenseCountApi()
     });
 };

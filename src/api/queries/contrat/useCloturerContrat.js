@@ -13,13 +13,17 @@ export function useCloturerContrat() {
     return useMutation({
         mutationFn: useCloturerContratApi,
         onSuccess: (data,vars) => {
-            const date = data.date_creation.split('-');
-            const offer = data.offre;
+            const date = data?.date_creation.split('-');
+            const offer = data?.offre;
             queryClient.invalidateQueries(['contrats']); 
-            queryClient.invalidateQueries(['archiveContrats', date[0], date[1]]);
-            queryClient.invalidateQueries(['archiveKpis', date[0], date[1]]);
-            queryClient.invalidateQueries(['next', vars.id_contrat]);
-             queryClient.invalidateQueries(['reservations', offer]);
+            if (date){
+                queryClient.invalidateQueries(['archiveContrats', date[0], date[1]]);
+                queryClient.invalidateQueries(['archiveKpis', date[0], date[1]]);
+            }
+            if (vars.id_contrat) {
+                queryClient.invalidateQueries(['Detailcontrat', vars.id_contrat]);
+            }
+            if (offer)  queryClient.invalidateQueries(['reservations', offer]);
 
             console.log("Contrat clôturé avec succès");
             toast.success(data.message || "Le contrat a été clôturé avec succès.");

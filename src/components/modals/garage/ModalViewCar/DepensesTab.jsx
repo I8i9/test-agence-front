@@ -1,17 +1,17 @@
 import { Separator } from "@/components/ui/separator";
 import {  DollarSign, HandCoins, Icon, Loader2, Receipt, Wallet, } from 'lucide-react'; 
-import { Cost } from "../../../../utils/costs";
+import { allCosts } from "../../../../utils/costs";
 import { useFetchDepenseGarage } from '../../../../api/queries/garage/useFetchDepenseGarage'; 
 import { FormatDateEEEEddMMyyyy} from '../../../../utils/dateConverter';
 import { Skeleton } from "../../../ui/skeleton";
 
 
 
-const DepenseSkeleton = () => (
+export const DepenseSkeleton = () => (
 
-  <div key={"expense-skeleton-garage"} className="space-y-2 flex-1 overflow-y-auto no-scrollbar py-2">
-        {Array.from({ length: 7 }).map((_, index) => (       
-            <div key={index} className="flex items-start justify-between border p-2 rounded-lg ">
+  <div key={"expense-skeleton-garage"} className="space-y-3 flex-1 overflow-y-auto no-scrollbar py-2">
+        {Array.from({ length: 5 }).map((_, index) => (       
+            <div key={index} className="flex items-start justify-between border h-18 p-2 rounded-lg ">
               <div className="flex items-center gap-3">
                 <Skeleton className="size-12  rounded-full flex items-center justify-center"></Skeleton>
                 <div>
@@ -46,7 +46,7 @@ const DepensesTab = ({ vehicleId }) => {
   if (isError || error) {
     return (
       <div className="h-full flex items-center justify-center">
-          <p className="text-gray-600">{error?.message || 'Une erreur est survenue'}</p>
+          <p className="text-destructive">{error?.message || 'Une erreur est survenue'}</p>
       </div>
     );
   }
@@ -72,9 +72,9 @@ const DepensesTab = ({ vehicleId }) => {
       {
       isLoading ? <DepenseSkeleton />
         :
-      <div key={"expense-modal-garage"} className="space-y-2 flex-1 overflow-y-auto no-scrollbar py-2">
+      <div key={"expense-modal-garage"} className="space-y-3  flex-1 overflow-y-auto - py-2">
         {expenses.map((expense) => {
-          const { icon: IconComponent, label } = Cost.find(cost => cost.value === expense.type_depense) || Cost.find(cost => cost.value === "AUTRE");
+          const { icon: IconComponent, label } = allCosts.find(cost => cost.value === expense.type_depense) || allCosts.find(cost => cost.value === "AUTRE");
           return (
             <div key={expense.id_depense} className="flex items-start justify-between p-2 border rounded-lg hover:bg-rod-foreground">
               <div className="flex items-center gap-3">
@@ -126,8 +126,8 @@ const DepensesTab = ({ vehicleId }) => {
                   </p>
                 </div>
               </div>
-              <span className="font-semibold text-xl p-2 ">
-                {expense.montant_depense.toFixed(2)} DT
+              <span className="font-bold text-base px-2">
+                {parseFloat(expense.montant_depense.toFixed(3))} DT
               </span>
             </div>
           );
@@ -153,7 +153,7 @@ const DepensesTab = ({ vehicleId }) => {
           </span>
           <span className="text-xl flex items-end flex-col gap-1   font-semibold">
             <span className="leading-none">
-            {totalAmount.toFixed(2)} DT
+            {parseFloat(totalAmount.toFixed(3))} DT
             </span>
               <span className=" leading-none text-gray-500 text-base font-normal">
                 ({expenses.length} {expenses.length > 1 ? "dépenses" : "dépense"})

@@ -6,7 +6,7 @@ import { toast } from "sonner";
 const useResillierContratApi=async (payload)=>{
     console.log("payload in useResillierContratApi", payload);
     const response= await mainapi.patch('/contrat/resilier',payload)
-    return response.data.data;
+    return response.data;
 }
 
 
@@ -20,12 +20,17 @@ export function useResillierContrat() {
             toast.success('Contrat résilié avec succès')
             const date = data.date_creation.split('-');
             const offer = data.offre;
+            const id_contrat = variables?.id_contrat;
             queryClient.invalidateQueries(['contrats']); 
-            queryClient.invalidateQueries(['archiveContrats', date[0], date[1]]);
-            queryClient.invalidateQueries(['archiveKpis', date[0], date[1]]);
-            queryClient.invalidateQueries(['Detailcontrat',variables.id_contrat]);
-            queryClient.invalidateQueries(['next', variables.id_contrat]);
-            queryClient.invalidateQueries(['reservations', offer]);
+            if (date){
+                queryClient.invalidateQueries(['archiveContrats', date[0], date[1]]);
+                queryClient.invalidateQueries(['archiveKpis', date[0], date[1]]);
+            }
+            if (id_contrat) {
+                queryClient.invalidateQueries(['Detailcontrat', id_contrat]);
+                queryClient.invalidateQueries(['next', id_contrat]);
+            }
+            if (offer)  queryClient.invalidateQueries(['reservations', offer]);
 
         },
         onError:(error)=>{

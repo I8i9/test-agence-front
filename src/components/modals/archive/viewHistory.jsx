@@ -9,6 +9,7 @@ const ViewHistory = ({
   entityNumber,
   totalAmount,
   isForDepense = false,
+  isOverPaid = false,
   useMutate
 }) => {
     const { data: paymentsData, isLoading, isError } = useMutate(id , { enabled: open });
@@ -22,6 +23,7 @@ const ViewHistory = ({
         totalAmount={totalAmount}
         paymentsData={paymentsData}
         isForDepense={isForDepense}
+        isOverPaid={isOverPaid}
         isLoading={isLoading}
         isError={isError}
     />

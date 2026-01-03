@@ -6,7 +6,7 @@ import { toast } from "sonner";
 const usePayDepenseApi = async (payload) => {
   console.log("payload in usePayDepenseApi", payload);
   const response = await mainapi.post('/paiement/depense',payload);
-  return response.data.data;
+  return response.data;
 }
 
 export function usePayDepense() {
@@ -14,15 +14,14 @@ export function usePayDepense() {
   return useMutation({
     mutationFn: usePayDepenseApi,
     onSuccess: (data,variables) => {
+      toast.success('Paiement enregistré avec succès');
       const date_paiement = variables.date_paiement.split('-');
       const year = date_paiement[0];
       const month = date_paiement[1];
       const date_depense = data.date_depense.split('-');
       queryClient.invalidateQueries(['archivePaiements', year, month]);
       queryClient.invalidateQueries(['archiveDepenses', date_depense[0], date_depense[1]]);
-      queryClient.invalidateQueries(['archiveKpis', date_depense[0], date_depense[1]]);
-      queryClient.invalidateQueries(['archiveKpis', year, month]);
-      toast.success('Paiement enregistré avec succès');
+      queryClient.invalidateQueries(['PaimentsDepense', variables.id_depense_paiement]);
       queryClient.invalidateQueries(['depenses']); 
     },
     onError: () => {

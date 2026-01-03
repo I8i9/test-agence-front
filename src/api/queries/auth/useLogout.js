@@ -14,6 +14,8 @@ export function useLogout() {
         },
         onSuccess: () => {
             logout();
+            // clear old toasts
+            toast.dismiss();
             toast("À bientôt ! Vous avez été déconnecté.");
             navigate('/login', { replace: true });
         },

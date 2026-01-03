@@ -4,7 +4,7 @@ export const createDashboardSlice = (set) => ({
     expenses : null,
     views : null,
     activeOffers: null,
-    activePromotions: null,
+    activePromos: null,
     contrats: null,
   },
 setDataOld: (dataOld) => set({ dataOld }),

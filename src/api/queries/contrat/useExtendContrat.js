@@ -12,12 +12,20 @@ export function useExtendContrat() {
     return useMutation({
         mutationFn: useExtendContratApi,
         onSuccess: (data, variables) => {
-            const date = data.date_creation.split('-');
+            const date = data?.date_creation.split('-');
+            const id_contrat = variables?.id_contrat;
+            const offer = data?.offre;
+
             queryClient.invalidateQueries(['contrats']); 
+            if (date){
             queryClient.invalidateQueries(['archiveContrats', date[0], date[1]]);
             queryClient.invalidateQueries(['archiveKpis', date[0], date[1]]);
-            queryClient.invalidateQueries(['Detailcontrat',variables.id_contrat]);
-            queryClient.invalidateQueries(['next', variables.id_contrat]);
+            }
+            if (id_contrat) {
+                queryClient.invalidateQueries(['Detailcontrat', id_contrat]);
+                queryClient.invalidateQueries(['next', id_contrat]);
+            }
+            if (offer)  queryClient.invalidateQueries(['reservations', offer]);
             
             toast.success(data.message || "Le contrat a été prolongé avec succès.");
         },

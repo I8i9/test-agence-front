@@ -3,7 +3,7 @@ import axios from "axios";
 import { useStore } from "../../store/store.js";
 
 const pdfapi = axios.create({
-  baseURL: import.meta.env.API_BASE_URL || "http://localhost:3000/",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/",
   withCredentials: true,
   // prevent JSON parsing of binary data
   transformResponse: [(data) => data],

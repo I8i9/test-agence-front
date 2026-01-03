@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { EllipsisVertical , RectangleEllipsis , ShieldUser , Shield , LogOut, Cog, Settings } from 'lucide-react'
+import { EllipsisVertical , RectangleEllipsis , ShieldUser , Shield , LogOut, Cog, Settings, LockIcon, KeyRound } from 'lucide-react'
 import { useStore } from '../../../store/store.js'
 import { useLogout } from '../../../api/queries/auth/useLogout.js'
 import { useState } from 'react'
@@ -22,11 +22,13 @@ import AgencySubscriptionSheet from '../../sheets/AgencySubscription/agencySubsc
 import AgencyAccountsSheet from '../../sheets/AgencyAccounts/agencyAccounts.JSX'
 import ChangePasswordSheet from '../../sheets/ChangePassword/ChangePassword.jsx'
 import { DrawerSettings } from '../../sheets/settings/settingDrawer.jsx'
+import TwoFactorSheet from '../../sheets/2fa/2fa.jsx'
 
 
 const User = (props) => {
   // Access the user from the store
   const user = useStore((state) => state.user); 
+
   //  handle logout
   const { mutate: logout } = useLogout();
   const handleLogout = () => {
@@ -39,6 +41,7 @@ const User = (props) => {
     password: false,
     accounts: false,
     settings: false,
+    twoFac: false,
   })
 
 const handleSheetChange = (sheetName) => (open) => {
@@ -121,7 +124,7 @@ const handleSheetChange = (sheetName) => (open) => {
 
 
               { /* Only show this item if the user is an admin */ 
-               (user.role === "admin" && user.agency.max_logins>1 ) &&
+               (user.role === "admin" && user.agency.max_logins > 1 ) &&
               <DropdownMenuItem className="py-1 cursor-pointer text-base hover:bg-rod-foreground " onClick={handleMenuItemClick("accounts")}>
                 <ShieldUser />
                 Gestion des comptes
@@ -130,12 +133,21 @@ const handleSheetChange = (sheetName) => (open) => {
 
               {
                 /* Only show this item if the user is an admin*/
-                //(user.role === "admin" && user.agency.max_logins>1 ) &&
+                //(user.role === "admin" ) &&
                 <DropdownMenuItem className="py-1 cursor-pointer text-base hover:bg-rod-foreground " onClick={handleMenuItemClick("settings")}>
                   <Settings />
                   Paramètres
                 </DropdownMenuItem>
               }
+
+              {
+                /* Only show this item if the user is an admin*/
+                <DropdownMenuItem className="py-1 cursor-pointer text-base hover:bg-rod-foreground " onClick={handleMenuItemClick("twoFac")}>
+                  <KeyRound />
+                  Authentification 
+                </DropdownMenuItem>
+              }
+
 
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
@@ -154,6 +166,8 @@ const handleSheetChange = (sheetName) => (open) => {
         <ChangePasswordSheet open={sheets.password} onOpenChange={handleSheetChange("password")} /> 
 
         <DrawerSettings open={sheets.settings} onOpenChange={handleSheetChange("settings")} />
+
+        <TwoFactorSheet open={sheets.twoFac} onOpenChange={handleSheetChange("twoFac")} />
         </>
   )
 }

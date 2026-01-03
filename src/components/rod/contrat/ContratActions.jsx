@@ -29,7 +29,7 @@ const ContratActions = ({ id, contratData }) => {
 
   // Hooks for payment functionality
   const { mutate: payContrat, isPending } = usePayContrat();
-  const { data: paymentsData, isLoading, isError } = useFetchPaimentContrat(id);
+  const { data: paymentsData, isLoading, isError } = useFetchPaimentContrat(id , { enabled: isListPaiementModalOpen });
 
   const openDetailContratModal = () => setTimeout(() => setIsDetailContratOpen(true), 200);
   const openCloturerModal = () => setTimeout(() => setIsCloturerModalOpen(true), 200);

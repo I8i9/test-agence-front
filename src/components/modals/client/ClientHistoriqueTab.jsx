@@ -9,7 +9,7 @@ import { formatDateDDMMYYYYHHMM } from "../../../utils/dateConverter";
 
 const ClientHistoriqueSkeleton = () => {
   return (
-    <div key={"history-contracts-skeleton"} className={`space-y-3  py-2 flex-1 overflow-y-auto no-scrollbar`}>
+    <div key={"history-contracts-skeleton"} className={`space-y-3  py-2 flex-1`}>
       {Array.from({ length: 3 }).map((_, index) => (
         <div key={index} className="border rounded-lg p-2 ">
           {/* Header with client info and status */}
@@ -88,12 +88,12 @@ const ClientHistoriqueTab = ({ ClientId }) => {
 
   // Calculate total contracts
   const totalContracts = contractss?.length || 0; 
-  const totalAmount = contractss?.reduce((sum, contract) => sum + contract.amount, 0) || 0;
+  const totalAmount = contractss?.reduce((sum, contract) => contract?.status !== "ANNULE" ? sum + contract.amount : sum, 0) || 0;
 
   // Handle empty state
   if (totalContracts === 0 && !isLoadingHistorique) {
     return (
-     <div className="h-full w-full flex flex-col items-center justify-center gap-2 -mt-8">
+     <div className="h-full w-full flex flex-col items-center justify-center gap-2">
 
           <span className="p-3 rounded-xl bg-rod-foreground mb-1">
            <ReceiptText className="w-8 h-8  mx-auto " />
@@ -111,7 +111,7 @@ const ClientHistoriqueTab = ({ ClientId }) => {
       {
           isLoadingHistorique ? <ClientHistoriqueSkeleton />
           :
-        <div key={"history-contracts"} className={`space-y-3  py-2 flex-1 overflow-y-auto no-scrollbar`}>
+        <div key={"history-contracts"} className={`space-y-3  py-2  overflow-y-auto h-[427px]`}>
           {/* show the contracts */}
           {contractss.map((contract) => {
 
@@ -120,7 +120,7 @@ const ClientHistoriqueTab = ({ ClientId }) => {
             new Date(contract.period.start)
           );
           return (
-          <div key={contract.id} className="border rounded-lg p-2 hover:bg-rod-foreground ">
+          <div key={contract.id} className="border rounded-lg p-2 h-18 hover:bg-rod-foreground ">
             {/* Header with client info and status */}
             <div className="flex items-start justify-between ">
               <div className="flex items-center gap-3">
@@ -161,10 +161,10 @@ const ClientHistoriqueTab = ({ ClientId }) => {
                 </div>
               </div>
               <div className="flex flex-col items-end gap-1">
-                <Badge className={`text-xs font-semibold   ${contractsStyles[contract.status].style}`}>
+                <Badge className={`text-xs font-medium   ${contractsStyles[contract.status].style}`}>
                   {contractsStyles[contract.status].label}
                 </Badge>
-                <span className="font-semibold text-lg">{contract.amount} DT</span>
+                <span className="font-bold text-base mt-1">{parseFloat(contract.amount.toFixed(3))} DT</span>
               </div>
             </div>
 
@@ -192,7 +192,7 @@ const ClientHistoriqueTab = ({ ClientId }) => {
           </span>
           <span className="text-xl flex items-end flex-col gap-1   font-semibold">
             <span className="leading-none">
-            {totalAmount.toFixed(2)} DT
+            {parseFloat(totalAmount.toFixed(3))} DT
             </span>
               <span className=" leading-none text-gray-500 text-base font-normal">
                 ({totalContracts} {totalContracts > 1 ? "contrats" : "contrat"})

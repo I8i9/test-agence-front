@@ -214,6 +214,8 @@ function DetailContratModal({ id, open, onClose}) {
                     <div className="w-full grid grid-cols-2 gap-x-6">
                       <DetailGeneralCard data={data?.informations_generales} />
                       <TarificationCard
+                        badge ={data?.badge}
+                        penalite ={data?.prix_totale_penalite}
                         data={data?.tarification}
                         options={
                           {
@@ -228,6 +230,13 @@ function DetailContratModal({ id, open, onClose}) {
                             "Siège enfant": data?.options?.siege_enfant ?? null,
                             "Option Wi-Fi": data?.options?.wifi ?? null,
                             "Option GPS": data?.options?.gps ?? null,
+                          }
+                        }
+                        numberOptions={
+                          {
+                            "Rehausseur": data?.nombres_options?.rehausseur || null,
+                            "Siège bébé": data?.nombres_options?.siege_bebe || null,
+                            "Siège enfant": data?.nombres_options?.siege_enfant || null,
                           }
                         }
                       />

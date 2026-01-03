@@ -37,7 +37,7 @@ function DetailClientModal({ client }) {
       <Eye />
     </Button>
       </DialogTrigger>
-      <DialogContent className={`flex max-w-[996px] ${activeTab === 'historique' ? ' h-[548px]' : 'h-[409px]'} scale-85 desktop:scale-90 desktop-lg:scale-110 flex-col overflow-hidden`}>
+      <DialogContent className={`flex max-w-[976px] h-auto scale-85 desktop:scale-90 desktop-lg:scale-110 flex-col overflow-hidden`}>
         <DialogHeader className="flex-shrink-0">
           <DialogTitle className="w-full leading-tight"> 
             {client?.nom_client || "Client Details"}
@@ -48,23 +48,38 @@ function DetailClientModal({ client }) {
           <Separator />
           
           {/* Tab Navigation */}
-          <div className="w-full flex items-center justify-between rounded-md p-1 bg-rod-foreground mt-1">
+         <div className="w-full flex items-center justify-between rounded-md p-1 bg-rod-foreground mt-1 relative overflow-hidden">
             {tabs.map((tab) => {
-              const IconComponent = tab.icon
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`w-full h-full py-1 rounded-sm flex justify-center items-center gap-2 transition-all duration-100 ${
-                    activeTab === tab.id 
-                      ? 'text-rod-primary bg-white font-normal' 
-                      : 'text-gray-500 font-normal cursor-pointer'
-                  }`}
-                >
-                  <IconComponent className="w-4 h-4" />
-                  <span className='text-base font-medium whitespace-nowrap'>{tab.label}</span> 
+                const IconComponent = tab.icon;
+                const isActive = activeTab === tab.id; 
+                
+                return (
+                    <button
+                    key={tab.id} 
+                    onClick={() => setActiveTab(tab.id)} 
+                    className="w-full py-1 flex justify-center items-center gap-2 relative z-10 cursor-pointer"
+                    >
+                    {isActive && (
+                        <motion.div
+                        layoutId="TabsOffreDetail"
+                        className="absolute inset-0 rounded-sm bg-white"
+                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                        />
+                    )}
+                  <IconComponent
+                    className={`w-4 h-4 mb-0.5 shrink-0 relative z-10 transition-colors ${
+                      isActive ? "text-rod-primary" : "text-muted-foreground"
+                    }`}
+                  />
+                  <span
+                    className={`text-base font-medium whitespace-nowrap relative z-10 transition-colors cursor-pointer ${
+                      isActive ? "text-rod-primary" : "text-muted-foreground"
+                    }`}
+                  >
+                    {tab.label}
+                  </span>
                 </button>
-              )
+              );
             })}
           </div>
         </DialogHeader>

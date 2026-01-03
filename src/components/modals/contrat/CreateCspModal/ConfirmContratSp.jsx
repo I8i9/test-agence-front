@@ -36,11 +36,17 @@ const ConfirmContratSp = ({ContratSpData , setContratSpData , prev , next , isPe
     "Assurance tous risque": ContratSpData?.selectedOptions.includes('prix_option_assurance') ? ContratSpData?.selected_offre?.prix_option_assurance ?? null : null,
     "Plein carburant": ContratSpData?.selectedOptions.includes('prix_options_plein') ? ContratSpData?.selected_offre?.prix_options_plein ?? null : null,
     "Livraison":  ContratSpData?.selectedOptions.includes('prix_options_livraison') ? ContratSpData?.livraison !== ContratSpData?.selected_offre?.prix_options_livraison ? ContratSpData?.livraison : ContratSpData?.selected_offre?.prix_options_livraison ?? null : null,
-    "Rehausseur": ContratSpData?.selectedOptions.includes('prix_options_rehausseur') ? ContratSpData?.selected_offre?.prix_options_rehausseur ?? null : null,
-    "Siège bébé": ContratSpData?.selectedOptions.includes('prix_options_siege_bebe') ? ContratSpData?.selected_offre?.prix_options_siege_bebe ?? null : null,
-    "Siège enfant": ContratSpData?.selectedOptions.includes('prix_options_siege_enfant') ? ContratSpData?.selected_offre?.prix_options_siege_enfant ?? null : null,
+    "Rehausseur": ContratSpData?.selectedOptions.includes('prix_options_rehausseur') ? ContratSpData?.selected_offre?.prix_options_rehausseur != null ? ContratSpData?.selected_offre?.prix_options_rehausseur* (ContratSpData?.numberOptions?.prix_options_rehausseur || 1)  : null : null,
+    "Siège bébé": ContratSpData?.selectedOptions.includes('prix_options_siege_bebe') ? ContratSpData?.selected_offre?.prix_options_siege_bebe != null ? ContratSpData?.selected_offre?.prix_options_siege_bebe* (ContratSpData?.numberOptions?.prix_options_siege_bebe || 1)  : null : null,
+    "Siège enfant": ContratSpData?.selectedOptions.includes('prix_options_siege_enfant') ? ContratSpData?.selected_offre?.prix_options_siege_enfant != null ? ContratSpData?.selected_offre?.prix_options_siege_enfant* (ContratSpData?.numberOptions?.prix_options_siege_enfant || 1)  : null : null,
     "Option Wi-Fi": ContratSpData?.selectedOptions.includes('prix_options_wifi') ? ContratSpData?.selected_offre?.prix_options_wifi ?? null : null,
     "Option GPS": ContratSpData?.selectedOptions.includes('prix_options_gps') ? ContratSpData?.selected_offre?.prix_options_gps ?? null : null,
+   };
+
+   const numberOptions = {
+    "Rehausseur": ContratSpData?.numberOptions?.prix_options_rehausseur || 0,
+    "Siège bébé": ContratSpData?.numberOptions?.prix_options_siege_bebe || 0,
+    "Siège enfant": ContratSpData?.numberOptions?.prix_options_siege_enfant || 0,
    };
 
     const totalOptions = Object.values(options).reduce((total, value) => {
@@ -65,7 +71,7 @@ const ConfirmContratSp = ({ContratSpData , setContratSpData , prev , next , isPe
           { //Header Cards Grid 
           <div className="grid grid-cols-2 gap-6">
             <DetailGeneralCard data={dataGeneral} localDates={true}/>
-            <TarificationCard data={taarificationdata} options={options}/>
+            <TarificationCard data={taarificationdata} options={options} numberOptions={numberOptions} />
           </div>}
 
          {ContratSpData.conducteur && (

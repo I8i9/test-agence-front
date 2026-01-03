@@ -6,7 +6,7 @@ import { toast } from "sonner";
 const cancelContratApi=async (payload)=>{
     console.log("payload in useCancelContratApi", payload);
     const response= await mainapi.patch('/contrat/cancel',payload)
-    return response.data.data;
+    return response.data;
 }
 
 
@@ -17,15 +17,21 @@ export function useCancelContrat() {
     return useMutation({
         mutationFn: cancelContratApi,
         onSuccess: (data, vars) => {
-            
-            const date = data.date_creation.split('-');
-            const offer = data.offre;
-            toast.success( data.message || 'Contrat résilié avec succès')
+            const id_contrat = vars?.id_contrat;
+            const date = data?.date_creation.split('-');
+            const offer = data?.offre;
+            toast.success( data?.message || 'Contrat résilié avec succès')
             queryClient.invalidateQueries(['contrats']); 
-            queryClient.invalidateQueries(['archiveContrats', date[0], date[1]]);
-            queryClient.invalidateQueries(['archiveKpis', date[0], date[1]]);
-            queryClient.invalidateQueries(['next', vars.id_contrat]);
-            queryClient.invalidateQueries(['reservations', offer]);
+            if (date){
+                queryClient.invalidateQueries(['archiveContrats', date[0], date[1]]);
+                queryClient.invalidateQueries(['archiveKpis', date[0], date[1]]);
+            }
+            if (id_contrat) {
+                queryClient.invalidateQueries(['next', id_contrat]);
+                queryClient.invalidateQueries(['Detailcontrat', id_contrat]);
+
+            }
+            if (offer)  queryClient.invalidateQueries(['reservations', offer]);
 
              
         },

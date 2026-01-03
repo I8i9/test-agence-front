@@ -3,7 +3,7 @@ import { loginApi } from '../../axios/auth.api.js';
 import { useStore } from '../../../store/store.js';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
-export function useLogin() {
+export function useLogin(onStepChange) {
     const navigate = useNavigate();
     const setUser = useStore((state) => state.setUser);
     const initializeSocket = useStore((state) => state.initializeSocket);
@@ -15,7 +15,7 @@ export function useLogin() {
                 if( error.response.status === 429) {
 
                     // get retry time from headers
-                    const retryAfter = error.response.headers['ratelimit-reset'];
+                    const retryAfter = error.response.headers['ratelimit-reset'] || error.response.data.retry_after || null;
                     const retryAfterMinutes = retryAfter ? Math.ceil(Number(retryAfter) / 60) : null;
 
                     // show error with retry time
@@ -50,9 +50,19 @@ export function useLogin() {
                 console.log(error.message)
             }
         },
-        onSuccess: ({ data }) => {
+        onSuccess: ({ data }) => { 
+
+            // Check if backend requires 2FA
+            if ( data.requires2FA ) {
+                if (onStepChange) {
+                    // Switch to OTP step and pass the email
+                    onStepChange('loginOtp', data.email); 
+                }
+                return; // do not redirect to dashboard
+            }
             setUser( data.data );
             initializeSocket(data.data.token); // Initialize socket after login
+            toast.dismiss();
             toast.success("Connexion réussie. Bienvenue !");
             navigate('/dashboard', { replace: true }); // Redirect to dashboard on successful login
         },

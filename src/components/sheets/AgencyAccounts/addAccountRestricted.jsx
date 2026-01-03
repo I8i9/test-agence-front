@@ -22,11 +22,8 @@ const AddAccountRestricted = () => {
                 </div>
                 <h3 className="text-lg font-semibold mt-2 ">Limite atteinte</h3>
                 <p className=" text-gray-500 text-center text-base">
-                    Vous avez atteint votre limite. Passez à un forfait supérieur pour débloquer plus de comptes.
+                    Vous avez atteint votre limite. Veuillez contacter le support pour augmenter votre limite de comptes.
                 </p>
-
-                {/* mpodal for requesting upgrade */}
-                <Button className="mt-4"> <ArrowUp/> Demander une mise à niveau</Button>
             </div>
         </CardContent>
     </Card>

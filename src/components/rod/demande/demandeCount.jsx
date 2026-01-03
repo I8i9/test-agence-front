@@ -5,8 +5,8 @@ import ToolTipCustom from '../../customUi/tooltip.jsx';
 import { useStore } from '../../../store/store.js';
 
 const DemandeCount = () => {
-    const { data , isLoading } = useFetchDemandeCount();
     const user = useStore(state => state.user);
+    const { data , isLoading } = useFetchDemandeCount({enabled: !user?.agency?.isExpired});
 
     if (user?.agency?.isExpired) {
         return null;

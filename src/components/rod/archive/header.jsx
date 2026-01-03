@@ -72,10 +72,10 @@ const { prevDate, nextDate, canGoPrev, canGoNext } = getNavigation(year, months.
 
   return (
     <div className='w-full flex items-center gap-2 '>
-        <Button variant={"outline"} size="icon" disabled={!canGoNext} onClick={() => {
-            if (canGoNext) {
-                setMonth(months[nextDate.month-1]);
-                setYear(nextDate.year);
+        <Button variant={"outline"} size="icon" disabled={!canGoPrev}  onClick={() => {
+            if (canGoPrev) {
+                setMonth(months[prevDate.month-1]);
+                setYear(prevDate.year);
             }
         }}>
             <ChevronLeft />
@@ -118,12 +118,14 @@ const { prevDate, nextDate, canGoPrev, canGoNext } = getNavigation(year, months.
                 </Popover>
         </span>
 
-        <Button variant={"outline"} size="icon" disabled={!canGoPrev} onClick={() => {
-            if (canGoPrev) {
-                setMonth(months[prevDate.month-1]);
-                setYear(prevDate.year);
+        <Button variant={"outline"} size="icon" disabled={!canGoNext} onClick={() => {
+            if (canGoNext) {
+                setMonth(months[nextDate.month-1]);
+                setYear(nextDate.year);
             }
-        }}>
+        }}> 
+        
+        
             <ChevronRight />
         </Button>
     </div>

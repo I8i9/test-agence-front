@@ -52,7 +52,7 @@ const Dashboard = () => {
           expenses: data?.expenses,
           views: data?.views,
           activeOffers: data?.activeOffers,
-          activePromotions: data?.activePromotions,
+          activePromos: data?.activePromos,
           contracts: data?.contracts,
         });
       }
@@ -199,7 +199,7 @@ const Dashboard = () => {
           </KpiCard>
           <KpiCard title="Promo Actifs"  titleStyle={"text-sm desktop-lg:text-base"} icon={<Percent className="size-4 desktop-lg:size-5" />}>
             <div className='h-fit flex flex-col justify-center text-2xl desktop:text-3xl desktop-lg:text-4xl  font-bold pb-2 '>
-                <CountUp startFrom={dataOld?.activePromotions || 0} end={data?.activePromotions} duration={3} />
+                <CountUp startFrom={dataOld?.activePromos || 0} end={data?.activePromos} duration={3} />
             </div>
           </KpiCard>
 

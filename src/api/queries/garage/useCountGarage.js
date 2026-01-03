@@ -6,10 +6,11 @@ const getGarageCountApi = async () => {
     return response.data.data;
 };
 
-export const useFetchGarageCount = () => {
+export const useFetchGarageCount = (options={}) => {
     return useQuery({
         queryKey: ['countGarage'],
         staleTime: 30 * 1000,
-        queryFn: () => getGarageCountApi()
+        queryFn: () => getGarageCountApi(),
+        enabled: options.enabled
     });
 };

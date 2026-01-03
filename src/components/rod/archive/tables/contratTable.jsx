@@ -232,7 +232,7 @@ const ContratsTable = ({ initialData , clients }) => {
                 const reste = parseFloat(row.original?.reste) || 0
                 return <span className='flex flex-col'>
                     <span className='font-semibold'>{cell.getValue() || 0} TTC</span>
-                    <span className='text-xs leading-none text-gray-500 text-truncate'>{reste ? "-" + reste : ""} </span>
+                    <span className='text-xs leading-none text-gray-500 text-truncate'>{reste ? (row?.original?.status_contrat === "SUR_PAYE" ? "+" : "-") + reste : ""} </span>
                 </span>
             },
             meta: { width: '10%' },
@@ -627,7 +627,8 @@ const ContratsTable = ({ initialData , clients }) => {
                     entityNumber={selectedContratId.sequence_contrat}
                     id={selectedContratId.id_contrat}
                     totalAmount={selectedContratId.prix_total} // Adjust if needed
-                    isForDepense={true}
+                    isForDepense={false}
+                    isOverPaid={selectedContratId.status_contrat === "SUR_PAYE"}
                     useMutate={useFetchPaimentContrat}
                 />
             )

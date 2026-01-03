@@ -292,10 +292,10 @@ const renderTabContent = () => {
         <DialogContent className={`flex max-w-[996px] ${activeTab < 2 ? 'h-[694px]' : 'h-auto'} scale-85 desktop:scale-90 desktop-lg:scale-110 flex-col`}>
           <DialogHeader className="flex-shrink-0">
             <DialogTitle className="w-full leading-tight">
-              {tabs[activeTab].label}
+              {tabs[activeTab - 1]?.label}
             </DialogTitle>
             <DialogDescription className='leading-tight text-base -mt-2'>
-              {tabs[activeTab].description}
+              {tabs[activeTab - 1]?.description}
             </DialogDescription>
 
             <Separator />
