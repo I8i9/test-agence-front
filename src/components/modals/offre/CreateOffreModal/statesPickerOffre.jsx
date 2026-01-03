@@ -1,5 +1,5 @@
 import React, {  useEffect } from 'react'
-import { Select, SelectContent , SelectTrigger , SelectItem , SelectValue } from "@/components/ui/Select";
+import { Select, SelectContent , SelectTrigger , SelectItem , SelectValue } from "@/components/ui/select";
 import { TunisianStates } from '../../../../utils/states';
 import { Plus, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
