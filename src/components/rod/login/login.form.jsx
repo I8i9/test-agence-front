@@ -76,7 +76,7 @@ const FormLogin = (props) => {
                     <FormItem> 
                         <FormLabel className="flex justify-between items-center">
                             <Label htmlFor="Idpassword">Mot de passe</Label>
-                            <Button type="button" onClick={()=>props.setCurrentForm("forgotPassword")} variant="link" className="text-rod-accent">
+                            <Button type="button" onClick={()=>props.setCurrentForm("forgotPassword")} variant="link" className="text-rod-accent !py-0 !h-fit">
                                 Mot de passe oublié?
                             </Button>
                         </FormLabel>

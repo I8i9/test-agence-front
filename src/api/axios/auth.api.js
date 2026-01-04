@@ -1,11 +1,11 @@
 import axios from 'axios'; 
 // Correct Axios instance creation
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL+'/auth/' || 'http://localhost:3000/auth/', 
+  baseURL: import.meta.env.API_BASE_URL || 'http://localhost:3000/auth/', 
   withCredentials: true              
 });
 
-console.log("Axios instance created with base URL:", import.meta.env.VITE_API_BASE_URL);
+console.log("Axios instance created with base URL:", import.meta.env.API_BASE_URL);
 
 export const loginApi = async ({email, password}) => { 
    const response =await api.post('/login', { email_login: email,password_login : password }); 

@@ -115,10 +115,7 @@ function CreateDepenseModal({selected , setSelected}) {
       reference_paiement: DepenseData.reference_paiement || '',
     };
     
-    // Add montant_interet only if it exists (for leasing)
-    if (DepenseData.montant_interet !== undefined && DepenseData.montant_interet !== null && DepenseData.montant_interet !== '') {
-      transformedData.montant_interet = parseFloat(DepenseData.montant_interet);
-    }
+
     
     // Create the depense first
     createDepense(transformedData, {

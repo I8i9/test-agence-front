@@ -75,7 +75,7 @@ const LoginPage = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }} id='leftside' className='w-full h-full pb-3 flex flex-col justify-between'>
         <div  className='w-full flex justify-between items-center laptop:h-[68px] desktop:h-19 desktop-lg:h-[88px] desktop-xl:h-[104px] h-16 laptop:px-5 desktop:px-6 desktop-lg:px-8 desktop-xl:px-8 px-5'>
-            <img src={Logo} alt="rod logo" className=' laptop:h-8 desktop:h-9 desktop-lg:h-10 desktop-xl:h-12 h-8' />
+            <img src={Logo} alt="rod logo" className=' laptop:h-8 desktop:h-8 desktop-lg:h-10 desktop-xl:h-12 h-8' />
             <Button variant="link" className='text-rod-primary flex gap-1 items-center'>
               <Link to={"/"} className='flex items-center'>rod.tn<ArrowUpRight className='ml-1 mb-0.5' /></Link>
             </Button>

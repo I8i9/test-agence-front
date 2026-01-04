@@ -13,7 +13,7 @@ import ConducteurCard from "./ConducteurCard";
 import { useState, useRef, useLayoutEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useFetchDetailContrat } from "../../../../api/queries/contrat/useFetchContratById";
-import { Camera, CheckCircle, Fuel, Info, Loader2, Printer, Shield, TriangleAlert, User } from "lucide-react";
+import { Camera, CheckCircle, Fuel, Gauge, Info, Loader2, Printer, Shield, TriangleAlert, User } from "lucide-react";
 import PolitiquesOffreCard from "../../offre/DetailOffreModel/PolitiqueOffreCard";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
@@ -21,6 +21,7 @@ import ImagesCard from "./ImagesCard";
 import { formatDateDDLLLLYYYY, formatDateDDMMYYYY, formatTimeHHmm } from "../../../../utils/dateConverter";
 import { printText } from "../../../../utils/printFunction";
 import { useCanPrint } from "../../../../hooks/useCanPrint";
+import ToolTipCustom from "../../../customUi/tooltip";
 
 const stylebadge = (badge) => {
   let styleClass = "";
@@ -157,15 +158,20 @@ function DetailContratModal({ id, open, onClose}) {
                 </Badge>
               }
 
-              {
-                data?.prix_totale_penalite ?
-                <Badge variant="outline" className={`bg-red-100 border-red-200 text-red-600 px-2 py-1 leading-none text-sm font-semibold`}>
-                  <TriangleAlert className="mb-0.5"/>Pénalisé : {data?.prix_totale_penalite} DT
+              { 
+                data?.kilometrage_final_contrat ?
+                <ToolTipCustom
+                trigger={
+                <Badge variant="outline"   className={`[&>svg]:size-4 px-2 py-1 leading-none text-sm font-semibold`}>
+                  <Gauge className="mb-0.5" /> {data?.kilometrage_final_contrat} km
                 </Badge>
-                : null
+                }
+                message={`Kilométrage du véhicule après location`}
+                />
+                :null
               }
 
-              {
+               {
                 data?.informations_generales?.date_prolongation &&
                 <Badge className={`bg-purple-100 text-purple-600 px-2 py-1 leading-none text-sm font-semibold`}>
                   {
@@ -175,6 +181,16 @@ function DetailContratModal({ id, open, onClose}) {
                   }
                 </Badge>
               }
+
+              {
+                data?.prix_totale_penalite ?
+                <Badge variant="outline" className={`bg-red-100 border-red-200 text-red-600 px-2 py-1 leading-none text-sm font-semibold`}>
+                  <TriangleAlert className="mb-0.5"/>Pénalisé : {data?.prix_totale_penalite} DT
+                </Badge>
+                : null
+              }
+
+             
               
               </div>
               <Badge className={`${ data?.badge ? stylebadge(data?.badge) : ''}  px-2 py-1 text-sm`}>

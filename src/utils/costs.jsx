@@ -66,6 +66,7 @@ export const Cost = [
     label: "Paiement Leasing",
     icon: Banknote,
     tva: 0.19,
+    hasSpecialTva : "19%-7% (depend du véhicule)",
     deductable: true,
     style:"text-blue-600 bg-blue-50"
   },

@@ -31,11 +31,6 @@ const CreateDepenseStep3 = ({ setDepenseData, DepenseData, next, prev }) => {
       .refine( val => val > 0,{
         message:"doit être supérieur à zéro."
       }),
-    montant_interet: z.number({
-        invalid_type_error: "intérêts doit être un nombre.",
-      })
-      .nonnegative("Le montant des intérêts ne peut pas être négatif.")
-      .optional(), 
     rts_depense: z.number({
         invalid_type_error: "La retenue à la source doit être un nombre.",
       })
@@ -52,23 +47,13 @@ const CreateDepenseStep3 = ({ setDepenseData, DepenseData, next, prev }) => {
       }),
     date_depense:
       z.date({ required_error: "La date de la facture est requise.", invalid_type_error: "La date de la facture est invalide." }),
-  }).superRefine((data, ctx) => {
-    // If type_depense is CREDIT_BAIL, montant_interet is required and must be > 0
-    if (data.rts_depense !== undefined && data.rts_depense > data.montant_depense) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "La retenue à la source ne peut pas être supérieure au total.",
-        path: ["rts_depense"],
-      });
-    }
-  });
+  })
 
   const form = useForm({
     resolver: zodResolver(DepenseSchema),
     defaultValues: {
       type_depense: DepenseData.type_depense || "", 
       montant_depense: DepenseData.montant_depense || undefined,
-      montant_interet: DepenseData.montant_interet || undefined,
       numero_facture: DepenseData.numero_facture || "",
       description_depense: DepenseData.description_depense || "",
       date_depense: DepenseData.date_depense || new Date(),
@@ -100,10 +85,6 @@ const CreateDepenseStep3 = ({ setDepenseData, DepenseData, next, prev }) => {
       deductible: selectedCostInfo ? selectedCostInfo.deductable : false,
     };
     
-    // Only add montant_interet if leasing is selected
-    if (form.getValues("type_depense") === "CREDIT_BAIL") {
-      formData.montant_interet = form.getValues("montant_interet");
-    }
     
     setDepenseData(formData);
     next(); 
@@ -155,7 +136,7 @@ const CreateDepenseStep3 = ({ setDepenseData, DepenseData, next, prev }) => {
               <div className="flex items-center justify-between">
                 <div>
                   <span className="text-sm font-regular text-zinc-700">TVA applicable:</span>
-                  <span className="ml-2 text-sm font-semibold ">{selectedCostInfo ? `${(selectedCostInfo.tva * 100).toFixed(0)}%` : "-"}</span>
+                  <span className="ml-2 text-sm font-semibold ">{selectedCostInfo ? selectedCostInfo?.hasSpecialTva ? selectedCostInfo?.hasSpecialTva : `${(selectedCostInfo.tva * 100).toFixed(0)}%` : "-"}</span>
                 </div>
                 <div>
                   <span className="text-sm font-regular text-zinc-700">Fiscalement:</span>
@@ -205,34 +186,6 @@ const CreateDepenseStep3 = ({ setDepenseData, DepenseData, next, prev }) => {
                   </FormItem>
                 )}
               />
-              {form.watch("type_depense") === "CREDIT_BAIL" && (
-                  <FormField
-                    control={form.control}
-                    name="montant_interet"
-                    render={({ field }) => (
-                      <FormItem className="w-full">
-                        <FormLabel className="invisible">Montant des intérêts</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Input
-                              type="number"
-                              placeholder="Ex : 50 DT"
-                              {...field}
-                              onChange={(e) => field.onChange(parseFloat(e.target.value) || "")}
-                              className="pr-10"
-                            /> 
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">DT</span>
-                          </div>
-                        </FormControl>
-                        {form.formState.errors.montant_interet ? (
-                          <FormMessage />
-                        ) : (
-                          <FormDescription>Part dédiée aux intérêts en TTC</FormDescription>
-                        )}
-                      </FormItem>
-                    )}
-                  />
-                )}
               </div>
               {/* rts Depense Field */}
               <FormField
